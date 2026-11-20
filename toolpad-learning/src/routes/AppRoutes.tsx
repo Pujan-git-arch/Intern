@@ -8,12 +8,22 @@ import Login from '../pages/login';
 
 type AppRoutesProps = {
     onLogin: () => void;
+    user:{
+        
+
+            email:string;
+            password:string;
+            name:string;
+            image:string;
+
+        
+    }
 
 };
-export default function AppRoutes({onLogin}: AppRoutesProps) {
+export default function AppRoutes({onLogin,user}: AppRoutesProps) {
     return(
         <Routes>
-            <Route path="login" element={<Login onLogin={onLogin} />} />
+            <Route path="login" element={<Login onLogin={onLogin} user={user} />} />
             <Route element={<DashboardLayoutPage />}>
                 <Route index element={<Home />} />
                 <Route path='movies' element={<Movies />} />

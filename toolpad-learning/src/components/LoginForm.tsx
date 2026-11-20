@@ -6,14 +6,24 @@ import { useState, type FormEvent } from "react";
 
 type LoginFormProps = {
     onLogin: () => void;
+    user: {
+    email: string;
+    password: string;
+    name: string;
+    image: string;
+  };
 }
 
 
-export default function LoginForm( {onLogin}: LoginFormProps){
+export default function LoginForm( {onLogin,user}: LoginFormProps){
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe]= useState(false);
     const [email, setEmail] = useState("");
     const [emailError, setEmailError] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+
+
 
     const validateEmail = (value: string) => {
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +44,12 @@ export default function LoginForm( {onLogin}: LoginFormProps){
         console.log("2, Email valid:", isEmailValid)
 
         if (!isEmailValid) return;
+        if (email !== user.email || password !== user.password) {
+            setPasswordError("Invalid email or password");
+            return;
+        }
+
+        setPasswordError("");
         console.log("3. Calling onLogin")
 
         onLogin();
@@ -59,7 +75,11 @@ export default function LoginForm( {onLogin}: LoginFormProps){
                 fullWidth 
                 type="email" 
                 placeholder="Enter your Email" />
-            <TextField label="Password" fullWidth type={showPassword? "text" :"password"} slotProps={{
+            <TextField label="Password" value={password} onChange={(e)=>{
+                setPassword(e.target.value);
+                setPasswordError("")
+            }} error={Boolean(passwordError)}
+                helperText={passwordError}  fullWidth type={showPassword? "text" :"password"} slotProps={{
                 input:{
                     endAdornment:(
                         <InputAdornment position="end">

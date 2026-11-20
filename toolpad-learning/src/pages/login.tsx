@@ -4,9 +4,21 @@ import { useNavigate } from "react-router";
 
 type LoginProps ={
   onLogin: () => void;
+
+  
+
+    user: {
+     email: string;
+     password: string;
+     name: string;
+     image: string;
+   };
+
+
+  
 }
 
-export default function Login( {onLogin}: LoginProps){
+export default function Login( {onLogin,user}: LoginProps){
 
   const navigate = useNavigate();
 
@@ -27,7 +39,7 @@ export default function Login( {onLogin}: LoginProps){
             alignItems:"center",
             minHeight:"100vh"
           }}>
-            <LoginForm onLogin={handleLogin}/>
+            <LoginForm onLogin={handleLogin} user={user}/>
 
         </Box>
     

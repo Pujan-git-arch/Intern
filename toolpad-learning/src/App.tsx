@@ -12,21 +12,29 @@ function App() {
       name: 'Pujan Subedi',
       email: 'hello@gmail.com',
       image:'',
+      password:"123456"
       
 
     },
   }
 
-  const authentication = {
-    signIn :() => {
-      console.log("6. signIn called");
-      setSession(demoUser);
+  const handleLogin = () => {
+  setSession({
+    user: {
+      name: demoUser.user.name,
+      email: demoUser.user.email,
+      image: demoUser.user.image,
     },
+  });
+};
+  const authentication = {
+    signIn :handleLogin,
 
     signOut: () =>{
       setSession(null);
     }
   }
+
   
   return(
     <ReactRouterAppProvider 
@@ -39,7 +47,7 @@ function App() {
     session={session}
     authentication={authentication}
     >    
-      <AppRoutes onLogin={authentication.signIn} />
+      <AppRoutes onLogin={handleLogin} user={demoUser.user} />
     </ReactRouterAppProvider>
 
   );
