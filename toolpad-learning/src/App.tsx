@@ -1,11 +1,20 @@
 import  {ReactRouterAppProvider} from '@toolpad/core/react-router';
 import {NAVIGATION} from './components/navigation';
 import AppRoutes from './routes/AppRoutes';
-import { useState } from 'react';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {login,logout} from "./redux/actions/authActions";
+import {type AppDispatch, type RootState } from './redux/store';
 
 function App() {
-  const [session,setSession] = useState<any>(null)
-  console.log("Current session:", session);
+
+ 
+
+  const session = useSelector(
+    (state: RootState) => state.session
+  )
+  const dispatch = useDispatch<AppDispatch>();
+   console.log("Current session:", session);
 
  const demoUser = {
     user: {
@@ -19,19 +28,24 @@ function App() {
   }
 
   const handleLogin = () => {
-  setSession({
-    user: {
-      name: demoUser.user.name,
-      email: demoUser.user.email,
-      image: demoUser.user.image,
-    },
-  });
+
+    dispatch(
+      login({
+        user:{
+          name: demoUser.user.name,
+          email: demoUser.user.email,
+          image: demoUser.user.image,
+        }
+      })
+    )
+
 };
+
   const authentication = {
     signIn :handleLogin,
 
     signOut: () =>{
-      setSession(null);
+      dispatch(logout());
     }
   }
 
