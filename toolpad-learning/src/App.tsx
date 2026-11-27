@@ -11,7 +11,7 @@ function App() {
  
 
   const session = useSelector(
-    (state: RootState) => state.session
+    (state: RootState) => state.auth.session
   )
   const dispatch = useDispatch<AppDispatch>();
    console.log("Current session:", session);

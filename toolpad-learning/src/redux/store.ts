@@ -1,10 +1,24 @@
-import {createStore} from "redux";
+import {createStore,  applyMiddleware} from "redux";
+import { createSagaMiddleware } from "redux-saga";
+import rootSaga from "./sagas/rootSaga";
 
-import authReducer from "./reducers/authReducer";
+import rootReducer from "./rootReducer";
+//create saga middleware
+const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(authReducer);
 
-export default store;
+const store = createStore(
+    rootReducer,
+    undefined,
+    applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(rootSaga)
+
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export default store;
+
+

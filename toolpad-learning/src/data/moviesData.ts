@@ -4,7 +4,7 @@ export interface MovieItem {
     releaseYear: number;
     description: string;
     image: string;
-    actors: string[];
+    actors?: string[];
 }
 
 export const moviesData: MovieItem[] = [
